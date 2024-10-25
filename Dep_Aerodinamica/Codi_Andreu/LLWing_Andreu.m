@@ -1,6 +1,6 @@
 % -------------------------------------------------------------------------     
 % PROGRAM LLWING: Weissinger lifting-line method for trapezoidal wings
-% 220024 Aerodin√ mica ESEIAAT-UPC
+% 220024 Aerodin√É mica ESEIAAT-UPC
 % e.ortega@upc.edu
 % -------------------------------------------------------------------------     
 
@@ -60,7 +60,7 @@ for valor = 0.5:0.1:2
     
         [cl_local,force_coeff] = KuttaJoukowsky(N,c4nods,h,GAMMA,Ui,s_pan,Cm0_y,chord,CDP,ncases,wake_len,S,mac,ALPHA) ;
 
-        mat_eff(i,j) = force_coeff (7 ,6)/force_coeff(11,6); % CANVIAR EL "6" SEGONS ANGLE D'ATAC DE LA CONDICI” DE VOL 
+        mat_eff(i,j) = force_coeff (7 ,6)/force_coeff(11,6); % CANVIAR EL "6" SEGONS ANGLE D'ATAC DE LA CONDICI√ì DE VOL 
 
         j = j + 1;
         
