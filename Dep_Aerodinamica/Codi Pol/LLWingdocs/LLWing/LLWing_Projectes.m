@@ -12,7 +12,8 @@ format long;
 % -------------------------------------------------------------------------
 
 %Flight conditions
-cruiseAltitude = 5000;
+cruiseAltitude = 3000; % m
+v = 138; % m/s
 [T,P,rho] = airConditions(cruiseAltitude);
 
 %Plane conditions
@@ -21,7 +22,7 @@ xcg = 1.4;
 
 % Wing planform (assumes planar wing)
 cr = 2 ; %Root chord
-ct = 1.8 ; %Tip chord
+ct = 1 ; %Tip chord
 b = 20; %wingspan
 Sec = b*(cr+ct) / 2; %Wing section
 Span=20;
@@ -31,6 +32,12 @@ TR = ct/cr  ;   % taper ratio
 DE25 = 0 ; % sweep angle at c/4 (deg)
 
 ETIP = 0; % tip twist (deg, negative for washout)
+
+%Reynolds determination
+mu = 1.8034e-5;
+mu2 = calculateViscosity(T)/rho;
+Re_root = calculateReynolds(v,cr,mu);
+Re_tip = calculateReynolds(v,ct,mu);
 
 % Sections data (uses linear interpolation between root and tip)
 
@@ -48,7 +55,7 @@ FlapCorr = 1.0 ; % flap effectiviness (<=1)
 
 % Simulation data (by the time being only longitudinal analysis)
 
-N = 100 ; % number of panels along the span
+N = 50 ; % number of panels along the span
 
 ALPHA = [ -10. -8.0 -4.0 0. 4.0 8.0 10. ] ; % angles of attack for analysis (deg) 
 
