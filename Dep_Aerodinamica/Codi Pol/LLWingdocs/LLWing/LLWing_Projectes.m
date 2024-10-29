@@ -17,15 +17,15 @@ v = 138; % m/s
 [T,P,rho] = airConditions(cruiseAltitude);
 
 %Plane conditions
-cl_design = 0.55;
+cl_design = 0.42;
 xcg = 1.4;
 
 % Wing planform (assumes planar wing)
 cr = 2 ; %Root chord
-ct = 1 ; %Tip chord
-b = 20; %wingspan
+ct = 0.5 ; %Tip chord
+b = 18; %wingspan
 Sec = b*(cr+ct) / 2; %Wing section
-Span=20;
+Span=18;
 
 AR = b^2/Sec ;   % aspect ratio
 TR = ct/cr  ;   % taper ratio
@@ -41,10 +41,11 @@ Re_tip = calculateReynolds(v,ct,mu);
 
 % Sections data (uses linear interpolation between root and tip)
 
-A0p = [ -1.1 -0.9 ]; % root and tip section zero-lift angles (deg)
-CM0p = [ 0.0033 0.0056 ]; % root and tip section free moments
-CDP = [ 0.0063 -0.0015 0.0062  ;   % root section CD0, k1 and k2  (airfoil CD curve)
-        0.0107 -0.0068 0.0089 ] ;  % tip section CD0, k1 and k2
+A0p = [ -1.22 -1.15 ]; % root and tip section zero-lift angles (deg)
+CM0p = [ 0.009 0.0076 ]; % root and tip section free moments
+%CDP CALCULATED FROM HW2_nacaPlot archive function (ROOT 2m AND TIP 1m aproximation Re)
+CDP = [ 0.003656878539270  -0.002865324621379   0.006216731672035  ;   % root section CD0, k1 and k2  (airfoil CD curve)
+        0.004606879413827  -0.003416310943263   0.006571601776373 ] ;  % tip section CD0, k1 and k2
 
 % Flap/aileron (symmetrical deflection)
 
@@ -55,10 +56,12 @@ FlapCorr = 1.0 ; % flap effectiviness (<=1)
 
 % Simulation data (by the time being only longitudinal analysis)
 
-N = 50 ; % number of panels along the span
+N = 75 ; % number of panels along the span
 
-ALPHA = [ -10. -8.0 -4.0 0. 4.0 8.0 10. ] ; % angles of attack for analysis (deg) 
+ALPHA = [ -2. 0. 2. 3. 4.0 8.0 ] ; % angles of attack for analysis (deg) 
 
+
+LiftTotal = 0.5*rho*Sec*v^2*cl_design
 % -------------------------------------------------------------------------
 % LIFTING LINE SOLUTION
 % -------------------------------------------------------------------------
@@ -128,7 +131,7 @@ hold off;
 
 figure;
 hold on;
-for (valor=0.1:0.1:2)
+for (valor=0.8)
     
     cr = 2 ; %Root chord
     ct = valor ; %Tip chord
@@ -167,7 +170,7 @@ grid on;
 hold off;
 
 figure; hold on;
-for (valor=0:0.5:2)
+for (valor=0:0.2:2)
     cr = 2 ; %Root chord
     ct = valor ; %Tip chord
     b = 20; %wingspan
@@ -205,7 +208,7 @@ for (valor=0:0.5:2)
     
     spanx = linspace(-0.5*Span,0.5*Span,N);
     
-    Clmax = 1.6267; %angle de 16.5 deg BUSCAR !!!!!!!!!!!!!!!
+    Clmax = 1.8; %tip a reynold 7M
     Cl_span = (Clmax - Clb)./Cla;
     Cl_stall = min(Cl_span);
     
@@ -216,22 +219,22 @@ for (valor=0:0.5:2)
 end
 legend (Interpreter="latex");
 legend show;
-yline(1.6267);
-title('Lift distribution revisar');
+yline(Clmax);
+title('Lift distribution');
 grid on;
 hold off;
 
 
 figure;
 hold on;
-for (valor=0:0.5:5)
-    
+for (valor=0:-0.5:-8)
+
     cr = 2 ; %Root chord
     ct = 0.8 ; %Tip chord
     b = 20; %wingspan
     Sec = b*(cr+ct) / 2; %Wing section
     Span=20;
-    
+
     AR = b^2/Sec ;   % aspect ratio
     TR = ct/cr  ;   % taper ratio
     DE25 = 0 ; % sweep angle at c/4 (deg)
@@ -253,7 +256,7 @@ for (valor=0:0.5:5)
     % Loads calculation using the Kutta-Joukowsky theorem (costlier, but general... and illustrative!)
 
     [cl_local,force_coeff] = KuttaJoukowsky(N,c4nods,h,GAMMA,Ui,s_pan,Cm0_y,chord,CDP,ncases,wake_len,S,mac,ALPHA) ;
-    
+
     % plot(force_coeff(7,:),force_coeff(11,:),'DisplayName',num2str(ETIP))
     % polyfit(force_coeff(11,:),force_coeff(7,:),2)
 
