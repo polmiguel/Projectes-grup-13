@@ -17,13 +17,13 @@ v = 138; % m/s
 [T,P,rho] = airConditions(cruiseAltitude);
 
 %Plane conditions
-cl_design = 0.42;
-xcg = 1.4;
+cl_design = 0.25;
+xcg = 0;
 
 % Wing planform (assumes planar wing)
 cr = 2 ; %Root chord
-ct = 0.5 ; %Tip chord
-b = 18; %wingspan
+ct = 1.3 ; %Tip chord
+b = 22; %wingspan
 Sec = b*(cr+ct) / 2; %Wing section
 Span=18;
 
@@ -31,7 +31,7 @@ AR = b^2/Sec ;   % aspect ratio
 TR = ct/cr  ;   % taper ratio
 DE25 = 0 ; % sweep angle at c/4 (deg)
 
-ETIP = 0; % tip twist (deg, negative for washout)
+ETIP = -5; % tip twist (deg, negative for washout)
 
 %Reynolds determination
 mu = 1.8034e-5;
@@ -89,12 +89,12 @@ LiftTotal = 0.5*rho*Sec*v^2*cl_design
 %% PART TREBALL PROJECTES
 figure;
 hold on;
-for (valor=0.1:0.1:2)
+for (valor=1.3)
     cr = 2 ; %Root chord
     ct = valor ; %Tip chord
-    b = 20; %wingspan
+    b = 22; %wingspan
     Sec = b*(cr+ct) / 2; %Wing section
-    Span=20;
+    Span=22;
     
     AR = b^2/Sec ;   % aspect ratio
     TR = ct/cr  ;   % taper ratio
@@ -131,13 +131,13 @@ hold off;
 
 figure;
 hold on;
-for (valor=0.8)
+for (valor=1.3)
     
     cr = 2 ; %Root chord
     ct = valor ; %Tip chord
-    b = 20; %wingspan
+    b = 22; %wingspan
     Sec = b*(cr+ct) / 2; %Wing section
-    Span=20;
+    Span=22;
     
     AR = b^2/Sec ;   % aspect ratio
     TR = ct/cr  ;   % taper ratio
@@ -170,12 +170,12 @@ grid on;
 hold off;
 
 figure; hold on;
-for (valor=0:0.2:2)
+for (valor=1.3)
     cr = 2 ; %Root chord
     ct = valor ; %Tip chord
-    b = 20; %wingspan
+    b = 22; %wingspan
     Sec = b*(cr+ct) / 2; %Wing section
-    Span=20;
+    Span=22;
     
     AR = b^2/Sec ;   % aspect ratio
     TR = ct/cr  ;   % taper ratio
@@ -213,13 +213,16 @@ for (valor=0:0.2:2)
     Cl_stall = min(Cl_span);
     
     
-    plot(spanx,Clb+Cl_stall.*Cla,'DisplayName',num2str(TR));
+    plot(spanx,Clb+Cl_stall.*Cla,'DisplayName',num2str(TR),'LineWidth',2);
+    
     
 
 end
 legend (Interpreter="latex");
 legend show;
-yline(Clmax);
+yline(Clmax,LineWidth=2);
+ylim([0.61875 2]);
+xlim([-11 11]);
 title('Lift distribution');
 grid on;
 hold off;
@@ -227,13 +230,13 @@ hold off;
 
 figure;
 hold on;
-for (valor=0:-0.5:-8)
+for (valor=-5)
 
     cr = 2 ; %Root chord
     ct = 0.8 ; %Tip chord
-    b = 20; %wingspan
+    b = 22; %wingspan
     Sec = b*(cr+ct) / 2; %Wing section
-    Span=20;
+    Span=22;
 
     AR = b^2/Sec ;   % aspect ratio
     TR = ct/cr  ;   % taper ratio
