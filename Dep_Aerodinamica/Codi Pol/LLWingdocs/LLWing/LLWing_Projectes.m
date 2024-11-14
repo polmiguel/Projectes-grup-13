@@ -42,7 +42,7 @@ Re_tip = calculateReynolds(v,ct,mu);
 % Sections data (uses linear interpolation between root and tip)
 
 A0p = [ -1.22 -1.15 ]; % root and tip section zero-lift angles (deg)
-CM0p = [ 0.009 0.0076 ]; % root and tip section free moments
+CM0p = [ -0.0086 -0.0086 ]; % root and tip section free moments
 %CDP CALCULATED FROM HW2_nacaPlot archive function (ROOT 2m AND TIP 1m aproximation Re)
 CDP = [ 0.003656878539270  -0.002865324621379   0.006216731672035  ;   % root section CD0, k1 and k2  (airfoil CD curve)
         0.004606879413827  -0.003416310943263   0.006571601776373 ] ;  % tip section CD0, k1 and k2
@@ -282,6 +282,54 @@ for (valor=-5)
 
 end
 title('Total Drag (induced + profile) VS lift coefficients curve, different ETIP values');
+legend (Interpreter="latex");
+legend show;
+grid on;
+hold off;
+
+%% Càlcul moments
+xcg = 0;
+cM = force_coeff (5 ,:) ;
+[reg_cM, R] = polyfit(force_coeff(7,:), cM, 1);
+
+dcmdcl = reg_cM (1) ;
+cm0 =reg_cM(2); 
+xac =-reg_cM(1)*mac*Span;
+figure;
+hold on;
+  cont = 0;
+for i = 0:0.5:5
+    xcg = i;
+    DE_flap = 0;
+
+    [c4nods,c75nods,chord,s_pan,h,Cm0_y,normals,mac,S] = geo(AR,TR,N,DE25,ETIP,A0p,CM0p,CDP,YF_pos,CF_ratio,DE_flap,FlapCorr); 
+    
+    [inv_A,wake_len] = infcoeff(N,c4nods,c75nods,normals,h) ;
+    
+    [GAMMA,Ui,ncases] = getcirc(N,ALPHA,inv_A,normals) ;
+    
+    [cl_local,force_coeff] = KuttaJoukowsky(N,c4nods,h,GAMMA,Ui,s_pan,Cm0_y,chord,CDP,ncases,wake_len,S,mac,ALPHA) ;
+    
+    cM = force_coeff (5 ,:) ;
+    [reg_cM, R] = polyfit(force_coeff(7,:), cM, 1);
+
+    dcmdcl = reg_cM (1) ;
+    cm0 =reg_cM(2); 
+    xac =-reg_cM(1)*mac*Span;
+
+  
+    CMcg = cm0 - force_coeff(7,:) * (xac - xcg)/(mac*Span);
+    
+    Y = polyfit (force_coeff(7,:),CMcg,1);
+    x = -1:0.1:2;
+    txt = ['$xcg$ = ',num2str(i)];
+    plot(x,Y(1)*x+Y(2),'DisplayName',txt);
+     
+end
+
+title('Moment VS lift coefficients curve');
+xlabel('Lift coefficient CL');
+ylabel('Moment coefficient about gravity centre CM{cg}');
 legend (Interpreter="latex");
 legend show;
 grid on;
