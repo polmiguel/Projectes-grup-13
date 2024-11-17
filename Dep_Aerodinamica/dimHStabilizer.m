@@ -13,9 +13,9 @@ d_XacXcg_cua = xcg - xac_cua;
 Moment_ala = M_le_ala + L_ala * d_XacXcg_ala;
 Moment_cua = M_le_cua + L_cua * d_XacXcg_cua;
 
-eq = Moment_ala == Moment_cua;
+eqn = Moment_ala == Moment_cua;
 
-S_cua = double(solve(eq,S_cua));
+S_cua = double(solve(eqn,S_cua));
 
 end
 
