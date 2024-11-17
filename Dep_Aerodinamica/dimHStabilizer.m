@@ -15,7 +15,7 @@ Moment_cua = M_le_cua + L_cua * d_XacXcg_cua;
 
 eq = Moment_ala == Moment_cua;
 
-S_cua = solve(eq,S_cua);
+S_cua = double(solve(eq,S_cua));
 
 end
 
