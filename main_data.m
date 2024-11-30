@@ -10,3 +10,9 @@ m_0 % Massa sense fuel ni bateríes
 
 h_cruise = 5000; % m
 v_cruise = 500; % km/h
+
+%% Aero
+
+CDG %Centre de gravetat
+I %Matriu d'inercia
+L_fus %Dimensions fuselatge
