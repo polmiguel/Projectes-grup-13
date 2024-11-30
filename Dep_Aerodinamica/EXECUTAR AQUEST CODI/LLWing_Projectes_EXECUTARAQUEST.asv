@@ -1,6 +1,6 @@
 % -------------------------------------------------------------------------     
 % PROGRAM LLWING: Weissinger lifting-line method for trapezoidal wings
-% 220024 Aerodin√ mica ESEIAAT-UPC
+% 220024 Aerodin√É mica ESEIAAT-UPC
 % e.ortega@upc.edu
 % -------------------------------------------------------------------------     
 
@@ -17,12 +17,12 @@ v = 138.8; % m/s
 [T,P,rho] = airConditions(cruiseAltitude);
 
 %Plane conditions
-cl_design = 0.2;
+cl_design = 0.25;
 xcg = 0;
 
 % Wing planform (assumes planar wing)
-cr = 3 ; %Root chord
-ct = 1.95 ; %Tip chord
+cr = 2.7 ; %Root chord
+ct = 1.755 ; %Tip chord
 b = 22; %wingspan
 Sec = b*(cr+ct) / 2; %Wing section
 Span=22;
@@ -155,8 +155,8 @@ cl_design = 0.25;
 xcg = 0;
 
 % Wing planform (assumes planar wing)
-cr = 3 ; %Root chord
-ct = 1.95 ; %Tip chord
+cr = 2.7 ; %Root chord
+ct = 1.755 ; %Tip chord
 b = 22; %wingspan
 Sec = b*(cr+ct) / 2; %Wing section
 Span=22;
@@ -236,7 +236,7 @@ axis([-0.5*b 0.5*b 0 1.5]);
 title('Lift distribution TAKE-OFF');
 grid on;
 hold off;
-%% DISTRIBUCI” LIFT PER ESTRUS
+%% DISTRIBUCI√ì LIFT PER ESTRUS
 distribucioLiftPerEstrus_CRUISE = Clb+Cl_stall.*Cla 
 
 distribucioLiftperEstrus_TAKEOFF = Clb_takeoff+Cl_stall_takeoff.*Cla_takeoff

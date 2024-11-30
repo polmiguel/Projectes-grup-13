@@ -21,11 +21,11 @@ cl_design = 0.25;
 xcg = 0;
 
 % Wing planform (assumes planar wing)
-cr = 2 ; %Root chord
-ct = 1.3 ; %Tip chord
+cr = 3 ; %Root chord
+ct = 1.95 ; %Tip chord
 b = 22; %wingspan
 Sec = b*(cr+ct) / 2; %Wing section
-Span=18;
+Span=22;
 
 AR = b^2/Sec ;   % aspect ratio
 TR = ct/cr  ;   % taper ratio
@@ -89,38 +89,10 @@ LiftTotal = 0.5*rho*Sec*v^2*cl_design
 %% PART TREBALL PROJECTES
 figure;
 hold on;
-for (valor=1.3)
-    cr = 2 ; %Root chord
-    ct = valor ; %Tip chord
-    b = 22; %wingspan
-    Sec = b*(cr+ct) / 2; %Wing section
-    Span=22;
-    
-    AR = b^2/Sec ;   % aspect ratio
-    TR = ct/cr  ;   % taper ratio
-    DE25 = 0 ; % sweep angle at c/4 (deg)
-    
-
-    % Wing discretization (lenghts are dimensionless with the wing span)
-
-    [c4nods,c75nods,chord,s_pan,h,Cm0_y,normals,mac,S] = geo(AR,TR,N,DE25,ETIP,A0p,CM0p,CDP,YF_pos,CF_ratio,DE_flap,FlapCorr); 
-
-    % Assembly of the influence coefficients matrix (needed once)
-
-    [inv_A,wake_len] = infcoeff(N,c4nods,c75nods,normals,h) ;
-
-    % Solve circulations for different angles of attack
-
-    [GAMMA,Ui,ncases] = getcirc(N,ALPHA,inv_A,normals) ;
-
-    % Loads calculation using the Kutta-Joukowsky theorem (costlier, but general... and illustrative!)
-
-    [cl_local,force_coeff] = KuttaJoukowsky(N,c4nods,h,GAMMA,Ui,s_pan,Cm0_y,chord,CDP,ncases,wake_len,S,mac,ALPHA) ;
 
     plot(ALPHA,force_coeff(7,:),'DisplayName',num2str(TR))
     polyfit(force_coeff(7,:),ALPHA,1)
 
-end
 
 legend (Interpreter="latex");
 legend show;
@@ -131,38 +103,11 @@ hold off;
 
 figure;
 hold on;
-for (valor=1.3)
-    
-    cr = 2 ; %Root chord
-    ct = valor ; %Tip chord
-    b = 22; %wingspan
-    Sec = b*(cr+ct) / 2; %Wing section
-    Span=22;
-    
-    AR = b^2/Sec ;   % aspect ratio
-    TR = ct/cr  ;   % taper ratio
-    DE25 = 0 ; % sweep angle at c/4 (deg)
-
-    % Wing discretization (lenghts are dimensionless with the wing span)
-
-    [c4nods,c75nods,chord,s_pan,h,Cm0_y,normals,mac,S] = geo(AR,TR,N,DE25,ETIP,A0p,CM0p,CDP,YF_pos,CF_ratio,DE_flap,FlapCorr); 
-
-    % Assembly of the influence coefficients matrix (needed once)
-
-    [inv_A,wake_len] = infcoeff(N,c4nods,c75nods,normals,h) ;
-
-    % Solve circulations for different angles of attack
-
-    [GAMMA,Ui,ncases] = getcirc(N,ALPHA,inv_A,normals) ;
-
-    % Loads calculation using the Kutta-Joukowsky theorem (costlier, but general... and illustrative!)
-
-    [cl_local,force_coeff] = KuttaJoukowsky(N,c4nods,h,GAMMA,Ui,s_pan,Cm0_y,chord,CDP,ncases,wake_len,S,mac,ALPHA) ;
 
     plot(force_coeff(7,:),force_coeff(11,:),'DisplayName',num2str(TR))
     polyfit(force_coeff(11,:),force_coeff(7,:),2)
 
-end
+
 title('Total Drag (induced + profile) VS lift coefficients curve, different TR values');
 legend (Interpreter="latex");
 legend show;
@@ -170,33 +115,6 @@ grid on;
 hold off;
 
 figure; hold on;
-for (valor=1.3)
-    cr = 2 ; %Root chord
-    ct = valor ; %Tip chord
-    b = 22; %wingspan
-    Sec = b*(cr+ct) / 2; %Wing section
-    Span=22;
-    
-    AR = b^2/Sec ;   % aspect ratio
-    TR = ct/cr  ;   % taper ratio
-    DE25 = 0 ; % sweep angle at c/4 (deg)
-    
-
-    % Wing discretization (lenghts are dimensionless with the wing span)
-
-    [c4nods,c75nods,chord,s_pan,h,Cm0_y,normals,mac,S] = geo(AR,TR,N,DE25,ETIP,A0p,CM0p,CDP,YF_pos,CF_ratio,DE_flap,FlapCorr); 
-
-    % Assembly of the influence coefficients matrix (needed once)
-
-    [inv_A,wake_len] = infcoeff(N,c4nods,c75nods,normals,h) ;
-
-    % Solve circulations for different angles of attack
-
-    [GAMMA,Ui,ncases] = getcirc(N,ALPHA,inv_A,normals) ;
-
-    % Loads calculation using the Kutta-Joukowsky theorem (costlier, but general... and illustrative!)
-
-    [cl_local,force_coeff] = KuttaJoukowsky(N,c4nods,h,GAMMA,Ui,s_pan,Cm0_y,chord,CDP,ncases,wake_len,S,mac,ALPHA) ;
 
     cl1 = cl_local(:, 1);
     CL1 = force_coeff(7, 1);
@@ -217,7 +135,7 @@ for (valor=1.3)
     
     
 
-end
+
 legend (Interpreter="latex");
 legend show;
 yline(Clmax,LineWidth=2);
@@ -230,35 +148,6 @@ hold off;
 
 figure;
 hold on;
-for (valor=-5)
-
-    cr = 2 ; %Root chord
-    ct = 0.8 ; %Tip chord
-    b = 22; %wingspan
-    Sec = b*(cr+ct) / 2; %Wing section
-    Span=22;
-
-    AR = b^2/Sec ;   % aspect ratio
-    TR = ct/cr  ;   % taper ratio
-    DE25 = 0 ; % sweep angle at c/4 (deg)
-
-    ETIP = valor; % tip twist (deg, negative for washout)
-
-    % Wing discretization (lenghts are dimensionless with the wing span)
-
-    [c4nods,c75nods,chord,s_pan,h,Cm0_y,normals,mac,S] = geo(AR,TR,N,DE25,ETIP,A0p,CM0p,CDP,YF_pos,CF_ratio,DE_flap,FlapCorr); 
-
-    % Assembly of the influence coefficients matrix (needed once)
-
-    [inv_A,wake_len] = infcoeff(N,c4nods,c75nods,normals,h) ;
-
-    % Solve circulations for different angles of attack
-
-    [GAMMA,Ui,ncases] = getcirc(N,ALPHA,inv_A,normals) ;
-
-    % Loads calculation using the Kutta-Joukowsky theorem (costlier, but general... and illustrative!)
-
-    [cl_local,force_coeff] = KuttaJoukowsky(N,c4nods,h,GAMMA,Ui,s_pan,Cm0_y,chord,CDP,ncases,wake_len,S,mac,ALPHA) ;
 
     % plot(force_coeff(7,:),force_coeff(11,:),'DisplayName',num2str(ETIP))
     % polyfit(force_coeff(11,:),force_coeff(7,:),2)
@@ -280,7 +169,6 @@ for (valor=-5)
 
     plot(spanx,Clb+Cl_stall.*Cla,'DisplayName',num2str(ETIP));
 
-end
 title('Total Drag (induced + profile) VS lift coefficients curve, different ETIP values');
 legend (Interpreter="latex");
 legend show;
