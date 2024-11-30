@@ -25,4 +25,5 @@ twist = -5; % (deg) rotació lineal de la root fins la tip de l'ala
 
 vel_creuer = 138.8; %(m/s) velocitat de creuer
 vel_takeoff = 55; %(m/s) velocitat de takeoff
+vel_landing = 53.5; %(m/s) velocitat de landing
 
