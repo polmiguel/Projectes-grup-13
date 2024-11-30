@@ -227,5 +227,5 @@ grid on;
 hold off;
 
 %% DISTRIBUCIÓ LIFT PER ESTRUS
-distribucioLiftPerEstrus = Clb+Cl_stall.*Cla; 
+distribucioLiftPerEstrus_creuer = Clb+Cl_stall.*Cla; 
 
