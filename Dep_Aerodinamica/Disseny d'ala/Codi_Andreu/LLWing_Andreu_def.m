@@ -25,11 +25,12 @@ FlapCorr = 0.9 ; % flap effectiviness (<=1)
 N = 100 ; % number of panels along the span
 
 ALPHA = [ -10. -8.0 -4.0 0. 4.0 8.0 10. 12 14] ; % angles of attack for analysis (deg)
+cr = 3 ; %Root chord
+ct = 1.95 ; %Tip chord
+b = 22; %wingspan
+Sec = b*(cr+ct) / 2; %Wing section
+Span=22;
 
-cr = 2 ;
-ct = 1.3 ;
-b = 22 ;
-Sec = b*(cr+ct) / 2 ;    % wing area
 AR = b^2/Sec ;   % aspect ratio
 TR = ct/cr  ;   % taper ratio
 xcg = 1;

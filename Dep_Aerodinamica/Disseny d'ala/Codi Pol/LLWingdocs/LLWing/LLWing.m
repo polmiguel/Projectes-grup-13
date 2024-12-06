@@ -12,7 +12,7 @@ format long;
 % -------------------------------------------------------------------------
 
 %Flight conditions
-cruiseAltitude = 5000;
+cruiseAltitude = 10000;
 [T,P,rho] = airConditions(cruiseAltitude);
 
 %Plane conditions
