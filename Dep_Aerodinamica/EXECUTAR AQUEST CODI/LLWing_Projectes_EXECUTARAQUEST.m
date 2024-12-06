@@ -126,7 +126,7 @@ figure; hold on;
     
     spanx = linspace(-0.5*Span,0.5*Span,N);
     
-    Clmax = 0.4; %tip a reynold 7M
+    Clmax = 0.45; %tip a reynold 7M
     Cl_span = (Clmax - Clb)./Cla;
     Cl_stall = min(Cl_span);
     
