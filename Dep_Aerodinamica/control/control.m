@@ -16,7 +16,7 @@ Iyy = 5.38 *10^4;
 Izz = 8.51 *10^4;
 
 %Regulations ratios
-omega_roll = 15*2*pi/360; %15deg in 11 seconds
+omega_roll = 15*2*pi/360; %15deg in 1 seconds
 omega_pitch = 20*2*pi/360; %10 deg in 1 second
 omega_yawn = 15*2*pi/360; %10 deg in 1 second
 
@@ -28,13 +28,13 @@ d_deflector_vertical = 20;
 
 
 % ROLL equation
-F_alerons = (Ixx * omega_roll)/(2 * (distancia_alerons));
+F_alerons = (Ixx * omega_roll)/(2 * (distancia_alerons))
 
 % PITCH equation
-F_deflector_horitzontal = (Iyy * omega_pitch)/(d_deflector_horitzontal-xcg);
+F_deflector_horitzontal = (Iyy * omega_pitch)/(d_deflector_horitzontal-xcg)
 
 % YAWN equation
-F_deflector_vertical = (Iyy * omega_yawn)/(d_deflector_vertical-xcg);
+F_deflector_vertical = (Iyy * omega_yawn)/(d_deflector_vertical-xcg)
 
 % Force equation
 Cl_aleiron = 0.2;  

@@ -31,7 +31,7 @@ AR = b^2/Sec ;   % aspect ratio
 TR = ct/cr  ;   % taper ratio
 DE25 = 0 ; % sweep angle at c/4 (deg)
 
-ETIP = -5; % tip twist (deg, negative for washout)
+ETIP = -5; % tip twist (deg, negative for washout) %CANVIAR AQUEST TWIST PER AEROELASTICITAT
 
 %Reynolds determination
 mu = 1.8034e-5;
@@ -58,7 +58,7 @@ FlapCorr = 1.0 ; % flap effectiviness (<=1)
 
 N = 75 ; % number of panels along the span
 
-ALPHA = [ -2. 0. 2. 3. 4.0 8.0 ] ; % angles of attack for analysis (deg) 
+ALPHA = [ -2. 0. 2. 3. 3.4 4.0 8.0 ] ; % angles of attack for analysis (deg) 
 
 
 LiftTotal = 0.5*rho*Sec*v^2*cl_design
