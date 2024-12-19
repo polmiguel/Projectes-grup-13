@@ -1,14 +1,14 @@
 clc; clear all;
 
 % Constants
-m = 11654; 
+m = 12654; 
 rho = 1.225; 
-Sdrag = pi * 1.28^2;
+Sdrag = pi * 1.4^2;
 Slift = (3 + 1.95)/2 * 22;
-C_L = 0.2;
-mu_r = 0.03; 
-C_D = 0.0622; 
-V_despegue = 58.6466; 
+C_L = 0.15;
+mu_r = 0.1; 
+C_D = 0.1; 
+V_despegue = 60; 
 
 % Functions
 T = @(v) 3000000 * 0.7 ./ (1 + v); 
